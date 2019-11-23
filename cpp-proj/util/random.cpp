@@ -24,3 +24,8 @@ double randomSubunitary() {
     static auto gen = std::bind(std::uniform_real_distribution<double>(0, 1), generator());
     return gen();
 }
+
+std::vector<std::vector<bool>> shufflePopulation(std::vector<std::vector<bool>> population) {
+    std::shuffle(population.begin(), population.end(), generator());
+    return population;
+}

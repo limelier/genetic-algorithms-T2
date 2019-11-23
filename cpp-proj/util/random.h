@@ -4,5 +4,6 @@
 bool randomBool();
 size_t randomIndex(size_t size);
 double randomSubunitary();
+std::vector<std::vector<bool>> shufflePopulation(std::vector<std::vector<bool>> population);
 
 #endif //T1_PROJECT_UTIL_RANDOM_H_

@@ -87,4 +87,15 @@ std::vector<bool> randomNeighbor(std::vector<bool> &bitset) {
     return neighbor;
 }
 
+std::pair<std::vector<bool>, std::vector<bool>> cross(std::vector<bool> first, std::vector<bool> second) {
+    auto bitmask = generateBitset(first.size());
+    for (size_t i = 0; i < bitmask.size(); i++) {
+        bool flip = bitmask[i];
+        if (flip) {
+            std::swap(first[i], second[i]);
+        }
+    }
+    return {first, second};
+}
+
 
