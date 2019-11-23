@@ -1,6 +1,6 @@
-#include <iostream>
+#include "src/testRunner.h"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    runTests();
     return 0;
 }

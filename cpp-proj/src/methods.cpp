@@ -6,13 +6,18 @@
 
 using Clock = std::chrono::high_resolution_clock;
 
+double Lower;
+double Upper;
+double Dimensions;
 
-std::vector<std::vector<bool>> generatePopulation(double lower, double upper, double dimensions) {
+size_t BITS;
+
+std::vector<std::vector<bool>> generatePopulation() {
     std::vector<std::vector<bool>> population;
     population.reserve(POP_SIZE);
 
-    const auto CHUNK = bitsetSize(lower, upper, PRECISION);
-    const auto BITS = CHUNK * dimensions;
+    const auto CHUNK = bitsetSize(Lower, Upper, PRECISION);
+    BITS = CHUNK * Dimensions;
 
     auto candidate = generateBitset(BITS);
 
@@ -24,6 +29,13 @@ std::vector<std::vector<bool>> generatePopulation(double lower, double upper, do
 }
 
 std::vector<std::vector<bool>> mutate(std::vector<std::vector<bool>> population) {
+    for (std::vector<bool>& individual : population) {
+        for (auto bit : individual) {
+            if (randomSubunitary() < 0.1) {
+                bit = !bit;
+            }
+        }
+    }
     return population;
 }
 
@@ -40,9 +52,13 @@ std::vector<bool> bestIndividual(std::vector<std::vector<bool>> vector, const te
 }
 
 result geneticSearch(const testFunction &function, double lower, double upper, int dimensions) {
+    Lower = lower;
+    Upper = upper;
+    Dimensions = dimensions;
+
     const auto startTime = Clock::now();
 
-    auto population = generatePopulation(lower, upper, dimensions);
+    auto population = generatePopulation();
     int gens = 1;
 
     while (gens < GEN_LIMIT) {
@@ -52,7 +68,9 @@ result geneticSearch(const testFunction &function, double lower, double upper, i
 
         auto crtTime = Clock::now();
         auto crtDuration = std::chrono::duration_cast<std::chrono::milliseconds>(crtTime - startTime).count();
-        if (crtDuration > MS_PER_ATTEMPT)
+        if (crtDuration > MS_PER_ATTEMPT) {
+            break;
+        }
     }
 
     auto best = bestIndividual(population, function);
