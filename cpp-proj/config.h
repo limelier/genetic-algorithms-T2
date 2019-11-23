@@ -1,13 +1,14 @@
 #ifndef CPP_PROJ_CONFIG_H
 #define CPP_PROJ_CONFIG_H
 
-const int ALGORITHM_RUNS = 1;
+const int ALGORITHM_RUNS = 30;
 const int PRECISION = 5;
 
-const int POP_SIZE = 100;
-const int GEN_LIMIT = 1000;
-const double BIT_MUTATION_CHANCE = 0.01;
+const int POP_SIZE = 150;
+const int GEN_LIMIT = 1500;
+const double BASE_MUTATION_CHANCE = 0.1;
 const int CROSSOVERS = 10;
+const double BASE_MULT = 1.1;
 
 const int MS_PER_ATTEMPT = 600000; // 10 minutes
 #endif //CPP_PROJ_CONFIG_H

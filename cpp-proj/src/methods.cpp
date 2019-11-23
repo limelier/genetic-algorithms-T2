@@ -29,7 +29,7 @@ std::vector<std::vector<bool>> generatePopulation() {
 std::vector<std::vector<bool>> mutate(std::vector<std::vector<bool>> population) {
     for (std::vector<bool>& individual : population) {
         for (auto bit : individual) {
-            if (randomSubunitary() < BIT_MUTATION_CHANCE) {
+            if (randomSubunitary() < BASE_MUTATION_CHANCE / BITS) {
                 bit = !bit;
             }
         }
@@ -59,7 +59,7 @@ std::vector<std::vector<bool>> select(std::vector<std::vector<bool, std::allocat
         if (value > maxValue) maxValue = value;
     }
 
-    auto base = maxValue * 1.1;
+    auto base = maxValue * BASE_MULT;
     for (auto value : eval) {
         auto fit = base - value;
         fitness.push_back(fit);
@@ -79,7 +79,6 @@ std::vector<std::vector<bool>> select(std::vector<std::vector<bool, std::allocat
         while (needle > wheel[which]) {
             which++;
         }
-
         newPop.push_back(population[which]);
     }
 
@@ -95,7 +94,7 @@ std::pair<std::vector<bool>, double> bestIndividual(const std::vector<std::vecto
 
     for (const auto& individual : population) {
         auto cEval = function(bitsetToDoubles(individual, CHUNK, Lower, Upper));
-        if (cEval > bEval) {
+        if (cEval < bEval) {
             best = individual;
             bEval = cEval;
         }
