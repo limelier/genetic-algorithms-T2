@@ -8,6 +8,12 @@ using Clock = std::chrono::high_resolution_clock;
 
 
 result geneticSearch(const testFunction &function, double lower, double upper, int dimensions) {
+    const auto startTime = Clock::now();
+
     // TODO
-    return result();
+
+    const auto endTime = Clock::now();
+    const auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
+
+    return result(); // TODO
 }
