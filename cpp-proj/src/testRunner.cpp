@@ -7,7 +7,7 @@
 
 void runTest(const std::string &filename,
              const std::function<double(std::vector<double>)> &function,
-             testMethod method,
+             const testMethod& method,
              double lower,
              double upper,
              double dimensions) {
@@ -52,9 +52,7 @@ void runTests() {
     };
 
     std::vector<std::pair<std::string, testMethod>> methodPairs = {
-        {"annealing", simulatedAnnealing},
-        {"hcfa", hillClimberFA},
-        {"hcsa", hillClimberSA}
+        {"genetic", geneticSearch}
     };
 
     std::vector<int> dimensions = {2, 5, 30};
