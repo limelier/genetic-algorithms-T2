@@ -50,7 +50,9 @@ std::vector<std::vector<bool>> crossover(std::vector<std::vector<bool>> populati
 std::vector<std::vector<bool>> select(std::vector<std::vector<bool, std::allocator<bool>>> population, const testFunction& function) {
     typeof(population) newPop;
     std::vector<double> eval;
+    eval.reserve(POP_SIZE);
     std::vector<double> fitness;
+    fitness.reserve(POP_SIZE);
 
     double maxValue = function(bitsetToDoubles(population[0], CHUNK, Lower, Upper));
     for (const auto& individual : population) {
@@ -59,7 +61,7 @@ std::vector<std::vector<bool>> select(std::vector<std::vector<bool, std::allocat
         if (value > maxValue) maxValue = value;
     }
 
-    auto base = maxValue * BASE_MULT;
+    auto base = maxValue + fabs(maxValue) * BASE_MULT;
     for (auto value : eval) {
         auto fit = base - value;
         fitness.push_back(fit);
