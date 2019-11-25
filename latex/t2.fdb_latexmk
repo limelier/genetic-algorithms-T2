@@ -1,8 +1,8 @@
 # Fdb version 3
-["pdflatex"] 1574692930 "/home/limelier/college/ag/t2/latex/t2.tex" "/home/limelier/college/ag/t2/latex/t2.pdf" "t2" 1574692948
+["pdflatex"] 1574693383 "/home/limelier/college/ag/t2/latex/t2.tex" "/home/limelier/college/ag/t2/latex/t2.pdf" "t2" 1574693383
   "/etc/texmf/web2c/texmf.cnf" 1572183896 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/limelier/college/ag/t2/latex/t2.aux" 1574692930 3762 e7c0a1aed6cec664cfcfbd50543a6715 ""
-  "/home/limelier/college/ag/t2/latex/t2.tex" 1574692948 15052 5541e3bacd4c99c126001d726df0fb7d ""
+  "/home/limelier/college/ag/t2/latex/t2.aux" 1574693383 3825 7dac7e02744e1ea3683ff0d4ed6dd7d3 ""
+  "/home/limelier/college/ag/t2/latex/t2.tex" 1574693383 14970 ce3ab6bed69d338838d56584db751255 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1480098698 1004 54797486969f23fa377b128694d548df ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1480098698 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -76,13 +76,13 @@
   "images/michalewicz-graph.jpg" 1570984429 27826 c9b251dd7ec85a034b04692bc4193e59 ""
   "images/rastrigin-graph.jpg" 1570984465 30569 570f39274f2c3e8b4788980cdd6b22ee ""
   "images/sphere-graph.jpg" 1570866604 24462 354c29745509305ed339bcce5bbcce87 ""
-  "t2.aux" 1574692930 3762 e7c0a1aed6cec664cfcfbd50543a6715 ""
-  "t2.out" 1574692930 749 972b9a15aeb3ef1da28bd69e44ce6d48 ""
-  "t2.tex" 1574692948 15052 5541e3bacd4c99c126001d726df0fb7d ""
+  "t2.aux" 1574693383 3825 7dac7e02744e1ea3683ff0d4ed6dd7d3 ""
+  "t2.out" 1574693383 749 972b9a15aeb3ef1da28bd69e44ce6d48 ""
+  "t2.tex" 1574693383 14970 ce3ab6bed69d338838d56584db751255 ""
   (generated)
-  "/home/limelier/college/ag/t2/latex/t2.pdf"
-  "t2.log"
-  "t2.pdf"
   "t2.aux"
+  "t2.log"
   "/home/limelier/college/ag/t2/latex/t2.log"
+  "t2.pdf"
   "t2.out"
+  "/home/limelier/college/ag/t2/latex/t2.pdf"

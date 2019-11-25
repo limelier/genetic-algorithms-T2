@@ -172,42 +172,33 @@
     \section{Results}
     \paragraph{}
     The following table shows a summary of the result data, on each function and number of dimensions respectively. It presents the mean, maximum, minimum and standard deviation of the results and times.
+    
+    \newpage
     \begin{table}[ht]
         \centering
         {\footnotesize
         \begin{tabular}{rr|rrrrrrrr}
         function & d & rMean & rMax & rMin & rSDev & tMean & tMax & tMin & tSDev \\ 
+        \hline
         dixon\&price & 2 & 0.74 & 4.26 & 0.01 & 0.98 & 49621.27 & 50289 & 48391 & 602.65 \\ 
-           \hline
         dixon\&price & 5 & 13.10 & 98.05 & 1.42 & 18.31 & 89026.77 & 90552 & 86896 & 1078.34 \\ 
-           \hline
         dixon\&price & 30 & 4944.14 & 10687 & 966.67 & 2773.47 & 443351.67 & 444711 & 440748 & 1117.59 \\ 
-        \hline
         michalewicz & 2 & -1.78 & -1.48 & -1.80 & 0.06 & 41696.53 & 42560 & 39150 & 1037.61 \\ 
-           \hline
         michalewicz & 5 & -4.39 & -3.88 & -4.64 & 0.22 & 82597.03 & 83960 & 80162 & 1179.32 \\ 
-           \hline
         michalewicz & 30 & -23.64 & -20.96 & -26.61 & 1.18 & 402037.57 & 404535 & 396398 & 2340.09 \\ 
-        \hline
         rastrigin & 2 & 1.61 & 5.30 & 0.00 & 1.20 & 48127.53 & 49429 & 46334 & 1121.48 \\ 
-           \hline
         rastrigin & 5 & 8.10 & 14.44 & 2.14 & 3.29 & 82636 & 85186 & 79665 & 2033.70 \\ 
-           \hline
         rastrigin & 30 & 81.56 & 106.80 & 54.84 & 13.75 & 389563.27 & 397649 & 374288 & 7044.99 \\ 
-        \hline
         sphere & 2 & 0.01 & 0.04 & 0.00 & 0.01 & 49067.73 & 49836 & 47400 & 740.50 \\ 
-           \hline
         sphere & 5 & 0.04 & 0.13 & 0.01 & 0.03 & 85068.53 & 86145 & 83524 & 664.93 \\ 
-           \hline
         sphere & 30 & 1.82 & 2.98 & 0.74 & 0.54 & 395912.27 & 401374 & 384129 & 4946.80 \\ 
-        \hline
         \end{tabular}
         }
         \caption{Genetic minimization result (r) and run time (t) statistics. Times are in ms.}
     \end{table}
 
     \paragraph{}
-    More interestingly, the following is a table comparing the four tested algorithms.
+    Additionally, the following is a table comparing the four tested algorithms' mean result values and mean execution times.
 
     \begin{table}[!h]
         \setlength\tabcolsep{3pt}
@@ -230,7 +221,7 @@
                                         & 30                 & 133.49       & 27035.33    & 111.89      & 938650.63    & 269.46          & 600000     & 1.82        & 395912.27     & 0                      
         \end{tabular}
         }
-        \caption{Comparison table. Function names shortened and certain large values truncated to save width.
+        \caption{Comparison table. Function names shortened and certain large values truncated to save width. "min(f)" represents the actual global minima of each function.
         \newline
         ?*: Michalewicz function minimum for 30 dimensions unknown.
         \newline
@@ -245,7 +236,6 @@
     \paragraph{}
     While the second table is forced to omit a few pieces of important data (such as the standard deviations of the times and results), it does still yield some interesting information. The genetic algorithm, while slower and less accurate than the others for simple problems (i.e. 2 dimensions), at higher dimensions it produces more accurate data than all other algorithms, and in the case of IHC/SA and Simulated Annealing, better times as well.
 
-    \newpage
     \section{Conclusion}
     \paragraph{}
     While genetic algorithms aren't necessarily the best solution for every problem, their adaptability makes them ideal for many complex problems. As previously thought, the abnormalities that plagued the previous experiments did not appear in this one. Genetic algorithms are more adaptable, and do not suffer as much from the particular properties of each function.
