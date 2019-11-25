@@ -21,7 +21,13 @@
 	\maketitle
 	\pagenumbering{arabic}
 	
-	\section{Introduction}
+    \section{Introduction}
+    \paragraph{}
+    This document details an experiment in which a genetic optimization algorithm is evaluated against four multi-dimensional functions, and its performance compared with three optimization algorithms previously examined in   Homework One. 
+    \paragraph{}
+    A genetic optimization algorithm works similarly to the evolutionary process of natural selection. A result is reached through random mutation, coupled with a bias towards the propagation of more effective individuals. As such, an approximate solution to a problem may be reached through trial and error, and incremental improvements.
+    \paragraph{}
+    This paper will describe the method of the experimental procedure, show the resulting data, and compare the results with the ones previously obtained to compare a genetic algorithm to other common optimization algorithms.
 
 	\section{Method}
     For the experiment, we will use a C++ implementation of a simple genetic minimization algorithm. This algorithm will be tested against the same four functions used in Homework 1, and its results evaluated and compared with those of Simulated Annealing and Iterated Hillclimber.
@@ -97,7 +103,7 @@
             eval.push(ev)
 
         fitness = []
-        treshhold = maxValue + fabs(maxValue) * 0.1
+        treshhold = maxValue + abs(maxValue) * 0.1
         for value in eval:
             fit = treshhold - value
             fitness.push(fit)
@@ -135,7 +141,7 @@
 		\caption{Sphere function graph}
 	\end{figure}
 
-    
+    \newpage
 	\subsubsection{Dixon \& Price function}
 	$$f(x_1 \cdots x_n) = (x_1 - 1)^2 ) + {\sum_{i=2}^{n} i(2x_i^{2} - x_{i-1})^2}, x_i \in [-10, 10]$$
 
@@ -165,9 +171,86 @@
 	For each of the four functions (for 2, 5 and 30 dimensions) the algorithm was run 30 times in parallel, each run limited to a time just above 600000ms (10 minutes). The results for each of the runs were transcribed in output files, which were then processed with a simple R script into a large \LaTeX\ table, which was then manually split, edited and spliced with the tables from last time. The results are below.
     \section{Results}
     \paragraph{}
-    // todo: description
+    The following table shows a summary of the result data, on each function and number of dimensions respectively. It presents the mean, maximum, minimum and standard deviation of the results and times.
+    \begin{table}[ht]
+        \centering
+        {\footnotesize
+        \begin{tabular}{rr|rrrrrrrr}
+        function & d & rMean & rMax & rMin & rSDev & tMean & tMax & tMin & tSDev \\ 
+        dixon\&price & 2 & 0.74 & 4.26 & 0.01 & 0.98 & 49621.27 & 50289 & 48391 & 602.65 \\ 
+           \hline
+        dixon\&price & 5 & 13.10 & 98.05 & 1.42 & 18.31 & 89026.77 & 90552 & 86896 & 1078.34 \\ 
+           \hline
+        dixon\&price & 30 & 4944.14 & 10687 & 966.67 & 2773.47 & 443351.67 & 444711 & 440748 & 1117.59 \\ 
+        \hline
+        michalewicz & 2 & -1.78 & -1.48 & -1.80 & 0.06 & 41696.53 & 42560 & 39150 & 1037.61 \\ 
+           \hline
+        michalewicz & 5 & -4.39 & -3.88 & -4.64 & 0.22 & 82597.03 & 83960 & 80162 & 1179.32 \\ 
+           \hline
+        michalewicz & 30 & -23.64 & -20.96 & -26.61 & 1.18 & 402037.57 & 404535 & 396398 & 2340.09 \\ 
+        \hline
+        rastrigin & 2 & 1.61 & 5.30 & 0.00 & 1.20 & 48127.53 & 49429 & 46334 & 1121.48 \\ 
+           \hline
+        rastrigin & 5 & 8.10 & 14.44 & 2.14 & 3.29 & 82636 & 85186 & 79665 & 2033.70 \\ 
+           \hline
+        rastrigin & 30 & 81.56 & 106.80 & 54.84 & 13.75 & 389563.27 & 397649 & 374288 & 7044.99 \\ 
+        \hline
+        sphere & 2 & 0.01 & 0.04 & 0.00 & 0.01 & 49067.73 & 49836 & 47400 & 740.50 \\ 
+           \hline
+        sphere & 5 & 0.04 & 0.13 & 0.01 & 0.03 & 85068.53 & 86145 & 83524 & 664.93 \\ 
+           \hline
+        sphere & 30 & 1.82 & 2.98 & 0.74 & 0.54 & 395912.27 & 401374 & 384129 & 4946.80 \\ 
+        \hline
+        \end{tabular}
+        }
+        \caption{Genetic minimization result (r) and run time (t) statistics. Times are in ms.}
+    \end{table}
+
+    \paragraph{}
+    More interestingly, the following is a table comparing the four tested algorithms.
+
+    \begin{table}[!h]
+        \setlength\tabcolsep{3pt}
+        {\footnotesize
+        \begin{tabular}{rr|llllllll|l}
+        \multirow{2}{*}{func}       & \multirow{2}{*}{d} & \multicolumn{2}{l}{IHC/FA} & \multicolumn{2}{l}{IHC/SA} & \multicolumn{2}{l}{Sim. Annealing} & \multicolumn{2}{l}{Genetic} & \multirow{2}{*}{min(f)} \\
+                                        &                    & rMean        & tMean       & rMean       & tMean        & rMean           & tMean            & rMean       & tMean         &                         \\
+        \hline
+        \multirow{3}{*}{d\&p} & 2                  & 0.03         & 1928.13     & 0.01        & 6672.93      & 0.99            & 5248.50          & 0.74        & 49621.27      & 0                       \\
+                                        & 5                  & 185.17       & 9573.10     & 4.49        & 40694.50     & 114510       & 6172.77          & 13.10       & 89026.77      & 0                       \\
+                                        & 30                 & 1039584   & 48142.93    & 673153  & 1017064  & 3592796      & 26734.00         & 4944.14     & 443351.67     & 0                       \\
+        \multirow{3}{*}{mich}    & 2                  & -1.80        & 1655.00     & -1.80       & 5771.40      & -0.34           & 600000    & -1.78       & 41696.53      & -1.80                 \\
+                                        & 5                  & -3.07        & 7348.27     & -3.73       & 34603.47     & -0.60           & 600000     & -4.39       & 82597.03      & -4.68               \\
+                                        & 30                 & -8.33        & 28802.57    & -8.86       & 887536.93    & -3.58           & 600000     & -23.64      & 402037.57     & ?*                \\
+        \multirow{3}{*}{rast}      & 2                  & 0.53         & 1888.13     & 0.36        & 6406.43      & 2.04            & 50906.13         & 1.61        & 48127.53      & 0                       \\
+                                        & 5                  & 18.96        & 8878.93     & 8.37        & 38223.17     & 59.77           & 207850.47        & 8.10        & 82636.00      & 0                       \\
+                                        & 30                 & 368.88       & 27435.30    & 349.83      & 947533.87    & 563.78          & 558424.10        & 81.56       & 389563.27     & 0                       \\
+        \multirow{3}{*}{sph}         & 2                  & 0.00         & 1845.03     & 0.00        & 6381.27      & 0.92            & 270970.37        & 0.01        & 49067.73      & 0                       \\
+                                        & 5                  & 1.56         & 8813.83     & 0.00        & 39890.83     & 43.26           & 582070.63        & 0.04        & 85068.53      & 0                       \\
+                                        & 30                 & 133.49       & 27035.33    & 111.89      & 938650.63    & 269.46          & 600000     & 1.82        & 395912.27     & 0                      
+        \end{tabular}
+        }
+        \caption{Comparison table. Function names shortened and certain large values truncated to save width.
+        \newline
+        ?*: Michalewicz function minimum for 30 dimensions unknown.
+        \newline
+        IHC/FA: Iterated Hillclimber, First Ascent
+        \newline
+        IHC/SA: Iterated Hillclimber, Steepest Ascent}
+    \end{table}
 
     \section{Result analysis}
+    \paragraph{}
+    As before, Dixon \& Price proves challenging to the algorithm because of its search domain size, and Rastrigin's complex graph with many local minima causes problems for higher dimensions as well. 
+    \paragraph{}
+    While the second table is forced to omit a few pieces of important data (such as the standard deviations of the times and results), it does still yield some interesting information. The genetic algorithm, while slower and less accurate than the others for simple problems (i.e. 2 dimensions), at higher dimensions it produces more accurate data than all other algorithms, and in the case of IHC/SA and Simulated Annealing, better times as well.
+
+    \newpage
+    \section{Conclusion}
+    \paragraph{}
+    While genetic algorithms aren't necessarily the best solution for every problem, their adaptability makes them ideal for many complex problems. As previously thought, the abnormalities that plagued the previous experiments did not appear in this one. Genetic algorithms are more adaptable, and do not suffer as much from the particular properties of each function.
+    \paragraph{}
+    One unique feature that this series of experiments didn't cover is their extension to problems where the efficiency of a solution isn't always this simple to determine, or changes over time. Hopefully, future experiments will show these properties as well.
 
     \section{References}
     \begin{itemize}
