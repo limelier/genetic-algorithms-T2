@@ -45,10 +45,10 @@ struct funcStruct {
 void runTests() {
 
     std::vector<funcStruct> funcs = {
-//        {"rastrigin", rastrigin, -5.12, 5.12},
-        {"dixon&price", dixon_price, -10, 10}
-//        {"michalewicz", michalewicz, 0, M_PI},
-//        {"sphere", sphere, -5.12, 5.12}
+        {"rastrigin", rastrigin, -5.12, 5.12},
+        {"dixon&price", dixon_price, -10, 10},
+        {"michalewicz", michalewicz, 0, M_PI},
+        {"sphere", sphere, -5.12, 5.12}
     };
 
     std::vector<std::pair<std::string, testMethod>> methodPairs = {

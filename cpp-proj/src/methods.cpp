@@ -27,7 +27,7 @@ std::vector<std::vector<bool>> generatePopulation() {
 }
 
 std::vector<std::vector<bool>> mutate(std::vector<std::vector<bool>> population) {
-    for (std::vector<bool>& individual : population) {
+    for (std::vector<bool> &individual : population) {
         for (auto bit : individual) {
             if (randomSubunitary() < BASE_MUTATION_CHANCE / BITS) {
                 bit = !bit;
@@ -42,12 +42,14 @@ std::vector<std::vector<bool>> crossover(std::vector<std::vector<bool>> populati
     for (int i = 0; i < CROSSOVERS; i++) {
         auto crossoverResult = cross(population[i], population[i + 1]);
         population[i] = crossoverResult.first;
-        population[i+1] = crossoverResult.second;
+        population[i + 1] = crossoverResult.second;
     }
     return population;
 }
 
-std::vector<std::vector<bool>> select(std::vector<std::vector<bool, std::allocator<bool>>> population, const testFunction& function) {
+std::vector<std::vector<bool>>
+select(std::vector<std::vector<bool, std::allocator<bool>>> population, const testFunction &function, double &bEval,
+       std::vector<bool> &bIndividual) {
     typeof(population) newPop;
     std::vector<double> eval;
     eval.reserve(POP_SIZE);
@@ -55,10 +57,14 @@ std::vector<std::vector<bool>> select(std::vector<std::vector<bool, std::allocat
     fitness.reserve(POP_SIZE);
 
     double maxValue = function(bitsetToDoubles(population[0], CHUNK, Lower, Upper));
-    for (const auto& individual : population) {
+    for (const auto &individual : population) {
         auto value = function(bitsetToDoubles(individual, CHUNK, Lower, Upper));
         eval.push_back(value);
         if (value > maxValue) maxValue = value;
+        if (value < bEval) {
+            bEval = value;
+            bIndividual = individual;
+        }
     }
 
     auto base = maxValue + fabs(maxValue) * BASE_MULT;
@@ -70,7 +76,7 @@ std::vector<std::vector<bool>> select(std::vector<std::vector<bool, std::allocat
     std::vector<double> wheel(POP_SIZE);
     wheel[0] = fitness[0];
     for (int i = 1; i < POP_SIZE; i++) {
-        wheel[i] = wheel[i-1] + fitness[i];
+        wheel[i] = wheel[i - 1] + fitness[i];
     }
 
     auto wheelEnd = wheel[POP_SIZE - 1];
@@ -87,28 +93,12 @@ std::vector<std::vector<bool>> select(std::vector<std::vector<bool, std::allocat
     return newPop;
 }
 
-std::pair<std::vector<bool>, double> bestIndividual(const std::vector<std::vector<bool>>& population, const testFunction &function) {
-    double bEval;
-    std::vector<bool> best;
-
-    best = population[0];
-    bEval = function(bitsetToDoubles(best, CHUNK, Lower, Upper));
-
-    for (const auto& individual : population) {
-        auto cEval = function(bitsetToDoubles(individual, CHUNK, Lower, Upper));
-        if (cEval < bEval) {
-            best = individual;
-            bEval = cEval;
-        }
-    }
-
-    return {best, bEval};
-}
-
 result geneticSearch(const testFunction &function, double lower, double upper, int dimensions) {
     Lower = lower;
     Upper = upper;
     Dimensions = dimensions;
+    double bEval = 100000000;
+    std::vector<bool> bIndividual;
 
     CHUNK = bitsetSize(Lower, Upper, PRECISION);
     BITS = CHUNK * Dimensions;
@@ -121,7 +111,7 @@ result geneticSearch(const testFunction &function, double lower, double upper, i
     while (generation < GEN_LIMIT) {
         population = mutate(population);
         population = crossover(population);
-        population = select(population, function);
+        population = select(population, function, bEval, bIndividual);
 
         generation++;
 
@@ -131,10 +121,6 @@ result geneticSearch(const testFunction &function, double lower, double upper, i
             break;
         }
     }
-
-    auto best = bestIndividual(population, function);
-    double bEval = best.second;
-    std::vector<bool> bIndividual = best.first;
 
     const auto endTime = Clock::now();
     const auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
