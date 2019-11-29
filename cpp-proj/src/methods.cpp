@@ -26,10 +26,10 @@ std::vector<std::vector<bool>> generatePopulation() {
     return population;
 }
 
-std::vector<std::vector<bool>> mutate(std::vector<std::vector<bool>> population) {
+std::vector<std::vector<bool>> mutate(std::vector<std::vector<bool>> population, double multiplier) {
     for (std::vector<bool> &individual : population) {
         for (auto bit : individual) {
-            if (randomSubunitary() < BASE_MUTATION_CHANCE / BITS) {
+            if (randomSubunitary() < BASE_MUTATION_CHANCE * multiplier / BITS) {
                 bit = !bit;
             }
         }
@@ -49,9 +49,12 @@ std::vector<std::vector<bool>> crossover(std::vector<std::vector<bool>> populati
 
 std::vector<std::vector<bool>>
 select(std::vector<std::vector<bool, std::allocator<bool>>> population, const testFunction &function, double &bEval,
-       std::vector<bool> &bIndividual) {
+       std::vector<bool> &bIndividual, double &multiplier) {
     typeof(population) newPop;
+    double bCEval = 10000000;
+    std::vector<bool> bCIndividual;
     std::vector<double> eval;
+    double evalSum = 0;
     eval.reserve(POP_SIZE);
     std::vector<double> fitness;
     fitness.reserve(POP_SIZE);
@@ -61,10 +64,23 @@ select(std::vector<std::vector<bool, std::allocator<bool>>> population, const te
         auto value = function(bitsetToDoubles(individual, CHUNK, Lower, Upper));
         eval.push_back(value);
         if (value > maxValue) maxValue = value;
-        if (value < bEval) {
-            bEval = value;
-            bIndividual = individual;
+        if (value < bCEval) {
+            bCEval = value;
+            bCIndividual = individual;
         }
+        evalSum += value;
+    }
+
+    if (bCEval < bEval) {
+        bEval = bCEval;
+        bIndividual = bCIndividual;
+    }
+
+    double evalAvg = evalSum / double(POP_SIZE);
+    if (evalAvg - bCEval <= DIVERSITY_TRESHHOLD) {
+        multiplier += MULTIPLIER_INCREMENT;
+    } else {
+        multiplier = 1.0;
     }
 
     auto base = maxValue + fabs(maxValue) * BASE_MULT;
@@ -94,6 +110,7 @@ select(std::vector<std::vector<bool, std::allocator<bool>>> population, const te
 }
 
 result geneticSearch(const testFunction &function, double lower, double upper, int dimensions) {
+    double multiplier = 1.0;
     Lower = lower;
     Upper = upper;
     Dimensions = dimensions;
@@ -109,9 +126,9 @@ result geneticSearch(const testFunction &function, double lower, double upper, i
     int generation = 1;
 
     while (generation < GEN_LIMIT) {
-        population = mutate(population);
+        population = mutate(population, multiplier);
         population = crossover(population);
-        population = select(population, function, bEval, bIndividual);
+        population = select(population, function, bEval, bIndividual, multiplier);
 
         generation++;
 
