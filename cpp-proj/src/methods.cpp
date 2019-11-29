@@ -59,9 +59,9 @@ select(std::vector<std::vector<bool, std::allocator<bool>>> population, const te
     std::vector<double> fitness;
     fitness.reserve(POP_SIZE);
 
-    double maxValue = function(bitsetToDoubles(population[0], CHUNK, Lower, Upper));
+    double maxValue = function(bitsetToDoubles(greyToBinary(population[0]), CHUNK, Lower, Upper));
     for (const auto &individual : population) {
-        auto value = function(bitsetToDoubles(individual, CHUNK, Lower, Upper));
+        auto value = function(bitsetToDoubles(greyToBinary(individual), CHUNK, Lower, Upper));
         eval.push_back(value);
         if (value > maxValue) maxValue = value;
         if (value < bCEval) {
@@ -142,5 +142,5 @@ result geneticSearch(const testFunction &function, double lower, double upper, i
     const auto endTime = Clock::now();
     const auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
 
-    return {bEval, bitsetToDoubles(bIndividual, CHUNK, Lower, Upper), duration};
+    return {bEval, bitsetToDoubles(greyToBinary(bIndividual), CHUNK, Lower, Upper), duration};
 }

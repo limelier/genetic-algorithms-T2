@@ -98,4 +98,18 @@ std::pair<std::vector<bool>, std::vector<bool>> cross(std::vector<bool> first, s
     return {first, second};
 }
 
+std::vector<bool> greyToBinary(const std::vector<bool> &grey) {
+    std::vector<bool> binary(grey.size());
+    binary[0] = grey[0];
+    for (size_t i = 1; i < grey.size(); i++) {
+        if (grey[i]) {
+            binary[i] = binary[i-1];
+        } else {
+            binary[i] = !binary[i-1];
+        }
+    }
+
+    return binary;
+}
+
 

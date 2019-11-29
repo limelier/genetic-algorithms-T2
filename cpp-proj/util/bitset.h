@@ -13,5 +13,6 @@ std::vector<bool> mergeBitsets(const std::vector<std::vector<bool>>& bitsets);
 std::vector<std::vector<bool>> splitBitset(std::vector<bool> bitset, size_t chunkSize);
 std::vector<double> bitsetToDoubles(const std::vector<bool>& bitset, size_t chunkSize, double lower, double upper);
 std::pair<std::vector<bool>, std::vector<bool>> cross(std::vector<bool> first, std::vector<bool> second);
+std::vector<bool> greyToBinary(const std::vector<bool>& grey);
 
 #endif //T1_PROJECT_UTIL_BITSET_H_
