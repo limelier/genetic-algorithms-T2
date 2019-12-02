@@ -103,9 +103,9 @@ std::vector<bool> greyToBinary(const std::vector<bool> &grey) {
     binary[0] = grey[0];
     for (size_t i = 1; i < grey.size(); i++) {
         if (grey[i]) {
-            binary[i] = binary[i-1];
-        } else {
             binary[i] = !binary[i-1];
+        } else {
+            binary[i] = binary[i-1];
         }
     }
 
